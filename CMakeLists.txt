@@ -7,7 +7,7 @@ message("################################ C/C++ COMPILER #######################
 message("################################################################################")         # Printing message...
 
 message("Setting project name...")                                                                  # Printing message...
-project (nu)                                                                                        # Setting project name...
+project (neutrino)                                                                                  # Setting project name...
 message("Project name = ${PROJECT_NAME}")                                                           # Printing message...
 
 set(CMAKE_CXX_STANDARD 17)                                                                          # Setting C++17 standard...
@@ -31,7 +31,7 @@ if(APPLE)                                                                       
   message("Adding include files...")                                                                # Printing message...
   set(INCLUDES                                                                                      # Setting "INCLUDES" variable...
     ${CMAKE_HOME_DIRECTORY}/Code/include                                                            # Neutrino include directory.
-    ${GLAD_PATH}/include                                                                            # GLAD include diretory.
+    ${GLAD_PATH}/include                                                                            # GLAD include directory.
     ${GLFW_PATH}/include                                                                            # GLFW include directory.
     ${GMSH_PATH}/include)                                                                           # GMSH include directory.
     target_include_directories(                                                                     # Setting include directories...
@@ -60,9 +60,9 @@ if(UNIX AND NOT APPLE)                                                          
   message("Adding include files...")                                                                # Printing message...
   set(INCLUDES                                                                                      # Setting "INCLUDES" variable...
     ${CMAKE_HOME_DIRECTORY}/Code/include                                                            # Neutrino include directory.
-    ${GLAD_PATH}/include                                                                            # GLAD include diretory.
-    ${GLFW_PATH}/include                                                                            # GLFW include directory.
-    ${GMSH_PATH}/include)                                                                           # GMSH include directory.
+    ${GLAD_PATH}/include                                                                            # GLAD include directory.
+    ${GLFW_PATH}										                                                                # GLFW include directory.
+    ${GMSH_PATH}) 	                                                                                # GMSH include directory.
   target_include_directories(                                                                       # Setting include directories...
     ${PROJECT_NAME} PRIVATE                                                                         # Project name.
     ${INCLUDES})                                                                                    # All include directories.
@@ -96,7 +96,7 @@ if(WIN32)                                                                       
   message("Adding include files...")                                                                # Printing message...
   set(INCLUDES                                                                                      # Setting "INCLUDES" variable...
     ${CMAKE_HOME_DIRECTORY}/Code/include                                                            # Neutrino include directory.
-    ${GLAD_PATH}/include                                                                            # GLAD include diretory.
+    ${GLAD_PATH}/include                                                                            # GLAD include directory.
     ${GLFW_PATH}/include                                                                            # GLFW include directory.
     ${GMSH_PATH}/include                                                                            # GMSH include directory.
     ${CL_PATH}/include)                                                                             # OpenCL include directory.
@@ -115,10 +115,6 @@ endif(WIN32)
 install(
   TARGETS ${PROJECT_NAME}                                                                           # Project name.
   DESTINATION ${NEUTRINO_PATH}/lib)                                                                 # Library installation path.
-
-install(
-  DIRECTORY ${INCLUDES}                                                                             # Includes files.
-  DESTINATION ${NEUTRINO_PATH})                                                                     # Includes installation path.
 
 message("DONE!")                                                                                    # Printing message...
 
