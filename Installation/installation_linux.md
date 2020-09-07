@@ -1,72 +1,30 @@
 # Linux installation
 
-## Overview
-Neutrino is a C++ library that facilitates writing parallel code running on GPU hardware combining the power of the OpenCL computational framework with the OpenGL graphics language (see https://www.neutrino.codes).
-
-Neutrino can be successfully installed and used on Linux in two different ways. The first method is more manual. The second one suggests the use of the **VScode** editor, because this exists in all three operating systems and it works in combination of their corresponding native C/C++ environments. This provides a universal toolchain that gives advantages when working from different types of machines.
-
-## Hardware requirements:
-- **OpenCL-OpenGL interoperability GPU mode**. Use the command line tool `clinfo` (see *Software requirements*) to check for the availability of this mode. On a terminal do:\
-`clinfo`\
-\
-In the text output (it can be long!) there should be a section regarding your GPU similar to this one:\
-...\
-`Name:                                          GeForce GTX 1060 6GB`\
-`Vendor:                                        NVIDIA Corporation`\
-`Driver version:                                451.67`\
-`Profile:                                       FULL_PROFILE`\
-`Version:                                       OpenCL 1.2 CUDA`\
-`Extensions:                                    cl_khr_global_int32_base_atomics cl_khr_global_int32_extended_atomics cl_khr_local_int32_base_atomics cl_khr_local_int32_extended_atomics cl_khr_fp64 cl_khr_byte_addressable_store cl_khr_icd cl_khr_gl_sharing cl_nv_compiler_options cl_nv_device_attribute_query cl_nv_pragma_unroll cl_nv_d3d10_sharing cl_khr_d3d10_sharing cl_nv_d3d11_sharing cl_nv_copy_opts cl_nv_create_buffer cl_khr_int64_base_atomics cl_khr_int64_extended_atomics`\
-...\
-\
-and verify the presence of the `cl_khr_gl_sharing` extension.
-
-## Software requirements:
-- Clinfo (https://github.com/Oblomov/clinfo)
-- OpenCL (runtime/loader + headers), coming along the installation of the graphics drivers.
-- OpenGL (library + headers), coming along the installation of the graphics drivers.
-- GIT (https://git-scm.com)
-- GLAD (https://glad.dav1d.de/) *
-- GLFW (https://www.glfw.org/)
-- GMSH (https://gmsh.info/)
-- GCC (https://gcc.gnu.org) **
-- CMake (https://cmake.org) **
-- GraphViz (https://graphviz.org/)
-- Doxygen (https://www.doxygen.nl/)
-
-Under Linux, it should be possible to install most of those packages via the system's package manager.
-
-\* The GLAD loader should be generated from its webpage using the following settings:
-- Language = C/C++
-- gl = Version 4.6 (or greater)
-- Profile = Core
-
-After having generated it, download the zip file containing the code and extract it in a custom directory (see *Installation*).
+Neutrino can be successfully installed and used on Linux in two different ways. The first method is more manual. The second one suggests the use of the **VScode** editor.
 
 \** When using the **VScode editor**, please follow the instructions (https://code.visualstudio.com/docs/cpp/config-linux) in order to install it and verify the installation of GCC, as well as the instructions (https://code.visualstudio.com/docs/cpp/cmake-linux) to verify the installation of Cmake and to install the Cmake Tools extension for VSCode.
 
-## Installation: 1st method (manual compilation)
-From a system command shell, navigate into your favourite directory and clone the Neutrino project using the command git clone https://github.com/NeutrinoCodes/neutrino.git.
+Manual compilation from sources using CMake/Make toolchain
+----
+1. From the command shell, navigate into your favourite directory and clone the Neutrino project using the command `git clone https://github.com/NeutrinoCodes/neutrino.git`.
 
-Into the Neutrino's project directory, create a configuration script file called `configure` and edit it by adding the following command lines:\
+2. Into the Neutrino's project directory, create a configuration script file called `configure` and edit it by adding the following command lines:\
 `cmake -B"./cmake" -H"./" \`\
 `-DGLAD_PATH=your_path_to_glad \`\
 `-DGLFW_PATH=your_path_to_glfw \`\
 `-DNEUTRINO_PATH=your_path_to_neutrino`\
 \
 and specify the paths accordingly, where:
+- *GLAD_PATH* is the path of the root directory of the Glad library: it contains the subdirectories src and include;
+- *GLFW_PATH* is the path where glfw3.h is located;
+- *NEUTRINO_PATH* is the path of Neutrino's project folder and should be followed by /libnu, where the library will be installed.
 
-*GLAD_PATH* is the path of the root directory of the Glad library: it contains the subdirectories src and include;
+3. Make the configuration script executable (`chmod a+x configure`) and launch it by typing `./configure` at the command prompt. The CMake configuration files will be generated.
 
-*GLFW_PATH* is the path where glfw3.h is located;
+4. Enter the cmake directory and type `make install` (use `make clean` to remove old build files if necessary).
 
-*NEUTRINO_PATH* is the path of Neutrino's project folder and should be followed by /libnu, where the library will be installed.
-
-Make the configuration script executable (`chmod a+x configure`) and launch it by typing `./configure` at the command prompt. The CMake configuration files will be generated.
-
-Enter the cmake directory and type `make install` (use `make clean` to remove old build files if necessary).
-
-## Installation: 2nd method (VScode toolchain compilation)
+Compilation using VScode toolchain
+---
 In this method we assume Neutrino is going to be installed in a directory named *NeutrinoCodes* containing the following subdirectories:
 - glad
 - glfw
@@ -100,7 +58,7 @@ and create a new file `settings.json` in it, then fill it with the following inf
 \
 and save it.\
 \
-At this point, Neutrino is configured for your system. 
+At this point, Neutrino is configured for your system.
 
 4. In VScode, go to the left bar and locate the **CMake** button (it comes after the installation of the CMake Tools extension for VScode) and push it: a CMake panel will open, push the **Configure All Projects** button on it.
 
